@@ -21,6 +21,7 @@ Based on [Tauri](https://tauri.app/)
 
 - You will be shown the empty text boxes to fill
 - You can always come back to the learning phase
+- 10 minute countdown will be shown
 - After clicking the `Done` button you will be moved into the `Check Results Phase`
 
 ### Check Results Phase
