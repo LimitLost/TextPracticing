@@ -34,6 +34,8 @@ async fn setup(app_handle: tauri::AppHandle) -> Result<Option<String>, String> {
 }
 
 fn main() {
+    logger::setup().expect("Setting up logger failed!");
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![setup])
         .run(tauri::generate_context!())
