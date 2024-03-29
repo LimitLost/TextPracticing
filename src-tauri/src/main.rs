@@ -3,11 +3,13 @@
     windows_subsystem = "windows"
 )]
 
+use anyhow::Context;
 use command_error::{CommandError, ForUserAnyError, ForUserError};
 
 mod cache;
 mod command_error;
 mod logger;
+mod practicing_file;
 
 async fn setup_base(app_handle: tauri::AppHandle) -> Result<Option<String>, CommandError> {
     let path_resolver = app_handle.path_resolver();
@@ -28,6 +30,26 @@ async fn setup_base(app_handle: tauri::AppHandle) -> Result<Option<String>, Comm
 #[tauri::command(async)]
 async fn setup(app_handle: tauri::AppHandle) -> Result<Option<String>, String> {
     match setup_base(app_handle).await {
+        Ok(o) => Ok(o),
+        Err(err) => Err(err.show()),
+    }
+}
+
+async fn open_file_base(file_path: String) -> Result<(), CommandError> {
+    let file = std::fs::File::open(&file_path)
+        .with_context(|| format!("Opening file | path: {:?}", file_path))
+        .for_user("Opening file failed!")?;
+
+    //TODO Handle File Contents
+
+    //TODO Open Cache file
+
+    Ok(())
+}
+
+#[tauri::command(async)]
+async fn open_file(file_path: String) -> Result<(), String> {
+    match open_file_base(file_path).await {
         Ok(o) => Ok(o),
         Err(err) => Err(err.show()),
     }
