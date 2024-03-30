@@ -185,6 +185,12 @@ async fn open_random_subject(window: tauri::Window, done: bool) -> Result<(), St
     }
 }
 
+//TODO Update cache (subject has been done) command
+
+//TODO Update last file open in cache
+
+//TODO Update last wait time in cache
+
 fn main() {
     logger::setup().expect("Setting up logger failed!");
 
