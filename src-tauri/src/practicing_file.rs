@@ -1,4 +1,9 @@
-use std::{collections::HashMap, ffi::OsStr, io::Read, path::Path};
+use std::{
+    collections::{HashMap, HashSet},
+    ffi::OsStr,
+    io::Read,
+    path::Path,
+};
 
 use lazy_static::lazy_static;
 use regex::bytes::Regex;
@@ -16,12 +21,12 @@ pub struct PracticingSubject {
     ///data - value of the capture
     ///
     ///Contains every named regex capture other than the `subject` capture
-    captures: HashMap<String, String>,
+    pub captures: HashMap<String, String>,
 }
 
 pub struct PracticingFileData {
     ///key - subject name
-    subjects: HashMap<String, PracticingSubject>,
+    pub subjects: HashMap<String, PracticingSubject>,
 }
 
 impl PracticingFileData {
@@ -74,7 +79,7 @@ impl PracticingFileData {
 ///.practicing file data
 #[derive(Deserialize, Serialize, Default)]
 pub struct PracticingFileCache {
-    done_subjects: Vec<String>,
+    pub done_subjects: HashSet<String>,
 }
 
 impl PracticingFileCache {
