@@ -1,4 +1,4 @@
-use anyhow::{anyhow, Context};
+use anyhow::Context;
 use log::error;
 
 pub struct CommandError {
@@ -33,13 +33,69 @@ impl Into<anyhow::Error> for CommandError {
     }
 }
 
-pub trait CommandToAnyhow<T> {
+pub trait CommandResult<T> {
     fn anyhow(self) -> anyhow::Result<T>;
+
+    /// Wrap the error value with additional context.
+    fn context<C>(self, context: C) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static;
+
+    /// Wrap the error value with additional context that is evaluated lazily
+    /// only once an error does occur.
+    fn with_context<C, F>(self, f: F) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+        F: FnOnce() -> C;
 }
 
-impl<T> CommandToAnyhow<T> for Result<T, CommandError> {
+impl<T> CommandResult<T> for Result<T, CommandError> {
     fn anyhow(self) -> anyhow::Result<T> {
         self.map_err(|err| err.into())
+    }
+
+    fn context<C>(self, context: C) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+    {
+        match self {
+            Ok(o) => Ok(o),
+            Err(err) => {
+                let new_err = if let Some(anyhow_err) = err.error {
+                    anyhow_err.context(context)
+                } else {
+                    anyhow::anyhow!("{}", context)
+                };
+
+                Err(CommandError {
+                    for_user_message: err.for_user_message,
+                    error: Some(new_err),
+                })
+            }
+        }
+    }
+
+    fn with_context<C, F>(self, f: F) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+        F: FnOnce() -> C,
+    {
+        match self {
+            Ok(o) => Ok(o),
+            Err(err) => {
+                let context = f();
+                let new_err = if let Some(anyhow_err) = err.error {
+                    anyhow_err.context(context)
+                } else {
+                    anyhow::anyhow!("{}", context)
+                };
+
+                Err(CommandError {
+                    for_user_message: err.for_user_message,
+                    error: Some(new_err),
+                })
+            }
+        }
     }
 }
 
@@ -124,6 +180,52 @@ impl<T> ForUserAnyError<T> for Option<T> {
     }
 }
 
+///Copy of the original was created to implement it for the anyhow Error, since the built in compiler blocks don't allow for the first one to be implemented
+pub trait ForUserAnyError2<T> {
+    /// Wrap the error value with additional context.
+    fn context_for_user<C>(self, context: C) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static;
+
+    /// Wrap the error value with additional context that is evaluated lazily
+    /// only once an error does occur.
+    fn with_context_for_user<C, F>(self, f: F) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+        F: FnOnce() -> C;
+}
+
+impl<T> ForUserAnyError2<T> for anyhow::Result<T> {
+    fn context_for_user<C>(self, context: C) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+    {
+        match self {
+            Ok(o) => Ok(o),
+            Err(err) => Err(CommandError {
+                for_user_message: format!("{}\r\n\r\nFor more info check logs.txt", context),
+                error: Some(err.context(context)),
+            }),
+        }
+    }
+
+    fn with_context_for_user<C, F>(self, f: F) -> Result<T, CommandError>
+    where
+        C: std::fmt::Display + Send + Sync + 'static,
+        F: FnOnce() -> C,
+    {
+        match self {
+            Ok(o) => Ok(o),
+            Err(err) => {
+                let context = f();
+                Err(CommandError {
+                    for_user_message: format!("{}\r\n\r\nFor more info check logs.txt", context),
+                    error: Some(err.context(context)),
+                })
+            }
+        }
+    }
+}
 pub trait ForUserError<T> {
     fn for_user<C>(self, for_user_info: C) -> Result<T, CommandError>
     where
