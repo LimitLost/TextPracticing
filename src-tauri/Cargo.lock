@@ -2968,6 +2968,7 @@ dependencies = [
  "lazy_static",
  "log",
  "log4rs",
+ "regex",
  "ron",
  "serde",
  "serde_json",
