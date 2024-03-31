@@ -239,6 +239,9 @@ async fn subject_done() -> Result<(), String> {
 fn main() {
     logger::setup().expect("Setting up logger failed!");
 
+    //Get More Debug Information
+    std::env::set_var("RUST_BACKTRACE", "1");
+
     tauri::Builder::default()
         .invoke_handler(tauri::generate_handler![
             setup,
