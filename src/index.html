@@ -1,48 +1,108 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="stylesheet" href="style.css" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tauri App</title>
-    <script type="module" src="/main.js" defer></script>
-    <style>
-      .logo.vanilla:hover {
-        filter: drop-shadow(0 0 2em #ffe21c);
-      }
-    </style>
-  </head>
 
-  <body>
-    <div class="container">
-      <h1>Welcome to Tauri!</h1>
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="style.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Text Practicing</title>
 
-      <div class="row">
-        <a href="https://tauri.app" target="_blank">
-          <img src="/assets/tauri.svg" class="logo tauri" alt="Tauri logo" />
-        </a>
-        <a
-          href="https://developer.mozilla.org/en-US/docs/Web/JavaScript"
-          target="_blank"
-        >
-          <img
-            src="/assets/javascript.svg"
-            class="logo vanilla"
-            alt="JavaScript logo"
-          />
-        </a>
-      </div>
+  <script type="module" src="/main.js" defer></script>
 
-      <p>Click on the Tauri logo to learn more about the framework</p>
+  <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js" defer></script>
+  <script src="/scripts/dark_mode.js" defer></script>
 
-      <div class="row">
-        <div>
-          <input id="greet-input" placeholder="Enter a name..." />
-          <button id="greet-button" type="button">Greet</button>
+
+</head>
+
+<body>
+  <!--Select File Panel-->
+  <div class="column" id="select-file-panel">
+    <div class="title">Select Practicing File</div>
+    <div class="column">
+      <button>
+        <div class="column">
+          <div>Open Last File</div>
+          <div id="last-file-path">Last File Path</div>
         </div>
-      </div>
-
-      <p id="greet-msg"></p>
+      </button>
+      <button>Open File Selector</button>
     </div>
-  </body>
+  </div>
+  <!--Select Subject Type Panel-->
+  <div class="column" id="select-subject-type-panel">
+    <div class="title">Select Subject Type</div>
+    <div class="row">
+      <button>Not Done</button>
+      <button>Done</button>
+    </div>
+  </div>
+  <!--Learning Phase Panel-->
+  <div class="column" id="learning-phase-panel">
+    <div class="title">Learning Phase</div>
+    <div class="column">
+      <div class="field column">
+        <div class="field-title"></div>
+        <div class="field-data" contenteditable="true"></div>
+      </div>
+    </div>
+  </div>
+
+  <!--Pause Time Panel-->
+  <div class="column">
+    <div class="title">Select Pause Time</div>
+    <div class="row">
+      <input type="number" id="edit-pause-minute">
+      :
+      <input type="number" id="edit-pause-second">
+    </div>
+    <div class="row">
+      <div id="pause-minute">0</div>
+      :
+      <div id="pause-second">0</div>
+    </div>
+    <div class="row">
+      <button>Cancel</button>
+      <button>Start Pause</button>
+    </div>
+  </div>
+
+  <!--Testing Phase Panel-->
+  <div class="column" id="testing-phase-panel">
+    <div class="row">
+      <div class="title">Testing Phase</div>
+      <div class="testing-countdown row">
+        <div id="testing-countdown-minute">10</div>
+        :
+        <div id="testing-countdown-second">00</div>
+      </div>
+    </div>
+
+    <table>
+      <tr>
+        <td class="field-title"></td>
+        <td>(Original)</td>
+      </tr>
+      <tr>
+        <td>
+          <div class="field-data" contenteditable="true"></div>
+        </td>
+        <td>
+          <div class="field-data" contenteditable="true"></div>
+        </td>
+      </tr>
+    </table>
+    <div class="row">
+      <button>Go Back To Learning</button>
+      <button>Done</button>
+    </div>
+    <div class="row">
+      <button>Learn this Subject Again</button>
+      <div>Or Open Random</div>
+      <button>Not done Subject</button>
+      <button>Done Subject</button>
+    </div>
+  </div>
+</body>
+
 </html>
