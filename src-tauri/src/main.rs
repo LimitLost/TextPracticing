@@ -184,12 +184,45 @@ async fn open_random_subject(window: tauri::Window, done: bool) -> Result<(), St
         Err(err) => Err(err.show()),
     }
 }
+///Updates Cache
+async fn subject_done_base() -> Result<(), CommandError> {
+    let mut current_cache_lock = CURRENT_FILE_CACHE.lock().await;
 
-//TODO Update cache (subject has been done) command
+    let current_cache = current_cache_lock
+        .as_mut()
+        .context("Cache")
+        .context_for_user("Practicing file is not open!")?;
 
-//TODO Update last file open in cache
+    let subject = CURRENT_SUBJECT
+        .lock()
+        .await
+        .clone()
+        .context_for_user("Subject is not open!")?;
 
-//TODO Update last wait time in cache
+    //Save updated cache only if needed
+    if current_cache.done_subjects.insert(subject) {
+        let cache_path_lock = CURRENT_FILE_CACHE_PATH.lock().await;
+
+        let cache_path = cache_path_lock
+            .as_ref()
+            .context("Cache Path")
+            .context_for_user("Practicing file is not open!")?;
+
+        current_cache
+            .save(cache_path)
+            .with_context(|| format!("path: {}", cache_path.display()))?;
+    }
+
+    Ok(())
+}
+
+#[tauri::command(async)]
+async fn subject_done() -> Result<(), String> {
+    match subject_done_base().await {
+        Ok(o) => Ok(o),
+        Err(err) => Err(err.show()),
+    }
+}
 
 fn main() {
     logger::setup().expect("Setting up logger failed!");
@@ -198,7 +231,8 @@ fn main() {
         .invoke_handler(tauri::generate_handler![
             setup,
             open_file,
-            open_random_subject
+            open_random_subject,
+            subject_done,
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");

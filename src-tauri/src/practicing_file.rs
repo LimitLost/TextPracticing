@@ -2,14 +2,15 @@ use std::{
     collections::{HashMap, HashSet},
     ffi::OsStr,
     io::Read,
-    path::Path,
+    path::{Path, PathBuf},
 };
 
+use anyhow::Context;
 use lazy_static::lazy_static;
 use regex::bytes::Regex;
 use serde::{Deserialize, Serialize};
 
-use crate::command_error::{CommandError, CommandResult, ForUserAnyError};
+use crate::command_error::{CommandError, CommandResult, ForUserAnyError, ForUserAnyError2};
 
 lazy_static! {
     static ref PRACTICING_REGEX:Regex=Regex::new(r"(X. )?(?<subject>.*) Wstęp\n+(?<wstep>(\s{3,}.*\n)*)\s*(X. )?\2 Teza\n+(?<teza>(\s{3,}.*\n)*)\s*(X. )?\2 Odniesienie\n+(?<odniesienie>(\s{3,}.*\n)*)\s*((X. )?\2 Kontekst\n+(?<kontekst>(\s{3,}.*\n)*)\s*)?(X. )?\2 Podsumowanie\n+(?<podsumowanie>(\s{3,}.*\n)*)").unwrap();
@@ -77,7 +78,7 @@ impl PracticingFileData {
 }
 
 ///.practicing file data
-#[derive(Deserialize, Serialize, Default)]
+#[derive(Debug, Deserialize, Serialize, Default)]
 pub struct PracticingFileCache {
     pub done_subjects: HashSet<String>,
 }
@@ -91,7 +92,17 @@ impl PracticingFileCache {
 
         Ok(this)
     }
-}
+
+    pub fn save(&self, path: impl AsRef<Path>) -> Result<(), CommandError> {
+        let text_file = std::fs::File::create(&path)
+            .context_for_user("Creating practicing file cache failed!")?;
+
+        ron::ser::to_writer_pretty(text_file, self, ron::ser::PrettyConfig::new())
+            .with_context(|| format!("Cache: {:?}", self))
+            .context_for_user("Updating practicing file cache failed!")?;
+
+        Ok(())
+    }
 
 pub fn open_practicing_file(
     path: impl AsRef<Path>,
