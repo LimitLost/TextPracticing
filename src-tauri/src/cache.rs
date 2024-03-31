@@ -1,11 +1,11 @@
-use std::path::PathBuf;
+use std::path::{Path, PathBuf};
 
 use anyhow::Context;
 use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
 use tauri::async_runtime::Mutex;
 
-use crate::command_error::{CommandError, ForUserAnyError2};
+use crate::command_error::{CommandError, CommandResult, ForUserAnyError2, ForUserAnyError};
 
 lazy_static! {
     static ref CACHE: Mutex<Option<Cache>> = Default::default();
@@ -13,12 +13,26 @@ lazy_static! {
     static ref CACHE_PATH: Option<PathBuf> = CACHE_PATH_BASE.blocking_lock().take();
 }
 
-#[derive(Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Cache {
     pub last_file_open: PathBuf,
     ///In Seconds
     pub last_wait_time: Option<u32>,
 }
+
+impl Cache {
+    fn save(&self, path: impl AsRef<Path>) -> Result<(), CommandError> {
+        let text_file =
+            std::fs::File::create(&path).context_for_user("Creating global cache file failed!")?;
+
+        ron::ser::to_writer_pretty(text_file, self, ron::ser::PrettyConfig::new())
+            .with_context(|| format!("Global Cache: {:?}", self))
+            .context_for_user("Updating global cache file failed!")?;
+
+        Ok(())
+    }
+}
+
 ///Returns last file open path
 pub async fn setup(cache_dir: PathBuf) -> anyhow::Result<Option<String>> {
     let cache_path = cache_dir.join("cache.ron");
@@ -45,7 +59,7 @@ pub async fn setup(cache_dir: PathBuf) -> anyhow::Result<Option<String>> {
     Ok(result)
 }
 
-pub async fn update_last_open(new_last_open: PathBuf) -> anyhow::Result<()> {
+pub async fn update_last_open(new_last_open: PathBuf) -> Result<(), CommandError> {
     let mut cache_lock = CACHE.lock().await;
     let cache = cache_lock.as_mut();
 
@@ -61,13 +75,19 @@ pub async fn update_last_open(new_last_open: PathBuf) -> anyhow::Result<()> {
         }
     }
 
+    if let Some(cache_path) = &*CACHE_PATH {
+        cache_lock
+            .as_ref()
+            .unwrap()
+            .save(cache_path)
+            .context("Saving global cache")?;
+    }
+
     Ok(())
 }
 
 ///`new_wait_time` In Seconds
-async fn cache_update_last_wait_time_base(
-    new_wait_time: u32,
-) -> Result<Option<String>, CommandError> {
+async fn cache_update_last_wait_time_base(new_wait_time: u32) -> Result<(), CommandError> {
     let mut cache_lock = CACHE.lock().await;
 
     let cache = cache_lock
@@ -77,10 +97,14 @@ async fn cache_update_last_wait_time_base(
 
     cache.last_wait_time = Some(new_wait_time);
 
-    todo!()
+    if let Some(cache_path) = &*CACHE_PATH {
+        cache.save(cache_path).context("Saving global cache")?;
+    }
+
+    Ok(())
 }
 #[tauri::command(async)]
-pub async fn cache_update_last_wait_time(new_wait_time: u32) -> Result<Option<String>, String> {
+pub async fn cache_update_last_wait_time(new_wait_time: u32) -> Result<(), String> {
     match cache_update_last_wait_time_base(new_wait_time).await {
         Ok(o) => Ok(o),
         Err(err) => Err(err.show()),

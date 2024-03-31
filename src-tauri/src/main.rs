@@ -103,7 +103,7 @@ async fn open_file_base(window: tauri::Window, file_path: String) -> Result<(), 
         "Provided file path is invalid!",
     )?)
     .await
-    .context_for_user("Updating cache failed!")?;
+    .context("Updating cache failed!")?;
 
     update_possible_selections(
         &window,
