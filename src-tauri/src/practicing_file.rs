@@ -103,12 +103,13 @@ impl PracticingFileCache {
 
         Ok(())
     }
-
+}
+///Returned `PathBuf` leads to file cache
 pub fn open_practicing_file(
     path: impl AsRef<Path>,
-) -> Result<(PracticingFileData, PracticingFileCache), CommandError> {
+) -> Result<(PracticingFileData, PathBuf, PracticingFileCache), CommandError> {
     let path = path.as_ref();
-    let (text_file_path, cache_file_path) = if path.extension() == Some(&OsStr::new("practicing")) {
+    let (text_file_path, cache_file_path) = if path.extension() == Some(OsStr::new("practicing")) {
         (path.with_extension(""), path.to_owned())
     } else {
         (
@@ -138,5 +139,5 @@ pub fn open_practicing_file(
         Default::default()
     };
 
-    Ok((practicing_file_data, practicing_file_cache))
+    Ok((practicing_file_data, cache_file_path, practicing_file_cache))
 }

@@ -3,8 +3,11 @@
     windows_subsystem = "windows"
 )]
 
+use std::path::PathBuf;
+
 use anyhow::Context;
-use command_error::{CommandError, CommandResult, ForUserAnyError, ForUserError};
+use cache::update_last_open;
+use command_error::{CommandError, CommandResult, ForUserAnyError, ForUserAnyError2, ForUserError};
 use lazy_static::lazy_static;
 use practicing_file::{open_practicing_file, PracticingFileCache, PracticingFileData};
 use rand::seq::IteratorRandom;
@@ -17,6 +20,7 @@ mod practicing_file;
 
 lazy_static! {
     static ref CURRENT_FILE_CACHE: Mutex<Option<PracticingFileCache>> = Default::default();
+    static ref CURRENT_FILE_CACHE_PATH: Mutex<Option<PathBuf>> = Default::default();
     static ref CURRENT_FILE_DATA: Mutex<Option<PracticingFileData>> = Default::default();
     static ref CURRENT_SUBJECT: Mutex<Option<String>> = Default::default();
 }
@@ -85,7 +89,7 @@ fn update_possible_selections(
 }
 
 async fn open_file_base(window: tauri::Window, file_path: String) -> Result<(), CommandError> {
-    let (file_data, file_cache) = open_practicing_file(&file_path)
+    let (file_data, file_cache_path, file_cache) = open_practicing_file(&file_path)
         .with_context(|| format!("Opening practicing files | path gotten: {:?}", file_path))?;
 
     if file_data.subjects.is_empty() {
@@ -93,6 +97,13 @@ async fn open_file_base(window: tauri::Window, file_path: String) -> Result<(), 
             "There is no practicing data found in the selected file!".to_owned(),
         ));
     }
+
+    update_last_open(command_error::ForUserAnyError::context_for_user(
+        file_path.parse(),
+        "Provided file path is invalid!",
+    )?)
+    .await
+    .context_for_user("Updating cache failed!")?;
 
     update_possible_selections(
         &window,
@@ -102,6 +113,7 @@ async fn open_file_base(window: tauri::Window, file_path: String) -> Result<(), 
     .context("Updating possible selections")?;
 
     *CURRENT_FILE_CACHE.lock().await = Some(file_cache);
+    *CURRENT_FILE_CACHE_PATH.lock().await = Some(file_cache_path);
     *CURRENT_FILE_DATA.lock().await = Some(file_data);
 
     Ok(())
@@ -233,6 +245,9 @@ fn main() {
             open_file,
             open_random_subject,
             subject_done,
+            cache::cache_update_last_wait_time,
+            cache::cache_get_last_wait_time,
+            cache::cache_get_last_file_path
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
