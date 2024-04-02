@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Text Practicing</title>
 
-  <script type="module" src="/main.js" defer></script>
+  <script type="module" src="/scripts/main.js" defer></script>
 
   <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js" defer></script>
   <script src="/scripts/dark_mode.js" defer></script>
@@ -17,7 +17,7 @@
 
 <body>
   <!--Select File Panel-->
-  <div class="column" id="select-file-panel">
+  <div class="column panel" id="select-file-panel">
     <div class="title">Select Practicing File</div>
     <div class="column">
       <button>
@@ -30,7 +30,7 @@
     </div>
   </div>
   <!--Select Subject Type Panel-->
-  <div class="column" id="select-subject-type-panel">
+  <div class="column panel" id="select-subject-type-panel">
     <div class="title">Select Subject Type</div>
     <div class="row">
       <button>Not Done</button>
@@ -38,7 +38,7 @@
     </div>
   </div>
   <!--Learning Phase Panel-->
-  <div class="column" id="learning-phase-panel">
+  <div class="column panel" id="learning-phase-panel">
     <div class="title">Learning Phase</div>
     <div class="column">
       <div class="field column">
@@ -49,7 +49,7 @@
   </div>
 
   <!--Pause Time Panel-->
-  <div class="column">
+  <div class="column panel">
     <div class="title">Select Pause Time</div>
     <div class="row">
       <input type="number" id="edit-pause-minute">
@@ -68,7 +68,7 @@
   </div>
 
   <!--Testing Phase Panel-->
-  <div class="column" id="testing-phase-panel">
+  <div class="column panel" id="testing-phase-panel">
     <div class="row">
       <div class="title">Testing Phase</div>
       <div class="testing-countdown row">
@@ -101,6 +101,18 @@
       <div>Or Open Random</div>
       <button>Not done Subject</button>
       <button>Done Subject</button>
+    </div>
+  </div>
+
+  <div id="global-loading" class="shadow-panel-base column full-center-content can-hide hidden fully-hidden">
+    <div class="loading-ring-box loading-ring loading-animate" id="loading-ring"></div>
+  </div>
+
+  <div class="shadow-panel-base can-hide hidden fully-hidden" id="err-panel-base">
+    <div class="panel err-theme column full-center-content">
+      <div class="err-title">Error!</div>
+      <div id="err-text">Example error text<br>multiline</div>
+      <button class="panel-button medium-text err-button" id="err-button" onclick="hideErrPanel()">OK</button>
     </div>
   </div>
 </body>
