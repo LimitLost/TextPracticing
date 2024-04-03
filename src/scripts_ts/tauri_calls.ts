@@ -2,11 +2,11 @@
  * 
  * @returns Last practicing file open, if any
  */
-async function setup(): Promise<String | null> {
+async function setup(): Promise<string | null> {
     return await invoke("setup", {})
 }
 
-async function open_file(file_path: String) {
+async function open_file(file_path: string) {
     return await invoke("open_file", { filePath: file_path })
 }
 async function open_random_subject(done: boolean) {

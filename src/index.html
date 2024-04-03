@@ -20,27 +20,27 @@
   <div class="column panel" id="select-file-panel">
     <div class="title">Select Practicing File</div>
     <div class="column">
-      <button>
+      <button id="last-file-button" onclick="openLastFile()">
         <div class="column">
           <div>Open Last File</div>
           <div id="last-file-path">Last File Path</div>
         </div>
       </button>
-      <button>Open File Selector</button>
+      <button onclick="openFileSelector()">Open File Selector</button>
     </div>
   </div>
   <!--Select Subject Type Panel-->
   <div class="column panel" id="select-subject-type-panel">
     <div class="title">Select Subject Type</div>
     <div class="row">
-      <button>Not Done</button>
-      <button>Done</button>
+      <button id="not-done-button">Not Done</button>
+      <button id="done-button">Done</button>
     </div>
   </div>
   <!--Learning Phase Panel-->
   <div class="column panel" id="learning-phase-panel">
     <div class="title">Learning Phase</div>
-    <div class="column">
+    <div class="column" id="learning-phase-fields">
       <div class="field column">
         <div class="field-title"></div>
         <div class="field-data" contenteditable="true"></div>
