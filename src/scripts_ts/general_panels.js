@@ -45,7 +45,7 @@ function showFatalError(err) {
     let text = document.getElementById("err-text");
     let hideButton = document.getElementById("err-button");
     text.innerText = err;
-    hideButton.style.visibility
+    hideButton.style.visibility = "hidden";
     show(panel);
 }
 /**
@@ -58,6 +58,7 @@ function showError(err, hide_action = undefined) {
     let panel = document.getElementById("err-panel-base");
     let text = document.getElementById("err-text");
     let hideButton = document.getElementById("err-button");
+    hideButton.style.visibility = null;
     if (typeof hide_action == 'function') {
         hideButton.innerText = "Try Again"
         hideButton.onclick = () => {
