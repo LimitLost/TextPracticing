@@ -39,7 +39,8 @@
   </div>
   <!--Learning Phase Panel-->
   <div class="column panel" id="learning-phase-panel">
-    <div class="title">Learning Phase</div>
+    <div class="title">Learning Phase: <div class="subject-title"></div>
+    </div>
     <div class="column" id="learning-phase-fields">
       <div class="field column">
         <div class="field-title"></div>
@@ -70,7 +71,8 @@
   <!--Testing Phase Panel-->
   <div class="column panel" id="testing-phase-panel">
     <div class="row">
-      <div class="title">Testing Phase</div>
+      <div class="title">Testing Phase: <div class="subject-title"></div>
+      </div>
       <div class="testing-countdown row">
         <div id="testing-countdown-minute">10</div>
         :
@@ -78,7 +80,7 @@
       </div>
     </div>
 
-    <table>
+    <table id="testing-table" class="second-hidden">
       <tr>
         <td class="field-title"></td>
         <td>(Original)</td>
@@ -91,6 +93,7 @@
           <div class="field-data" contenteditable="true"></div>
         </td>
       </tr>
+
     </table>
     <div class="row">
       <button>Go Back To Learning</button>

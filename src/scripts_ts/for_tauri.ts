@@ -17,9 +17,28 @@ function update_possible_selections(not_done_possible: boolean, done_possible: b
 }
 
 function reset_learning_panel(subject: string) {
+    for (const el of document.getElementsByClassName("subject-title")) {
+        (<HTMLElement>el).innerText = subject;
+    }
+
     //TODO Update learning-phase-fields and same thing in testing panel
+
+    document.getElementById("learning-phase-fields")!.innerHTML = ""
+    document.getElementById("testing-table")!.innerHTML = ""
+
 }
 
 function create_learning_panel_field(title: string, data: string) {
+    let name_tr = document.createElement('tr');
+    let data_tr = document.createElement('tr');
+    let learning_div = document.createElement('div');
 
+    //TODO create internal html for above variables
+
+    let learning_phase_fields = document.getElementById("learning-phase-fields")!
+    let testing_table = document.getElementById("testing-table")!
+
+    learning_phase_fields.appendChild(learning_div);
+    testing_table.appendChild(name_tr);
+    testing_table.appendChild(data_tr);
 }
