@@ -21,20 +21,45 @@ function reset_learning_panel(subject: string) {
         (<HTMLElement>el).innerText = subject;
     }
 
-    //TODO Update learning-phase-fields and same thing in testing panel
-
     document.getElementById("learning-phase-fields")!.innerHTML = ""
     document.getElementById("testing-table")!.innerHTML = ""
 
 }
 
 function create_learning_panel_field(title: string, data: string) {
+    //Table rows for testing panel
     let name_tr = document.createElement('tr');
     let data_tr = document.createElement('tr');
+
+    name_tr.innerHTML = `
+    <td class="field-title"></td>
+    <td>(Original)</td>`;
+
+    data_tr.innerHTML = `
+    <td>
+      <div class="field-data" contenteditable="true"></div>
+    </td>
+    <td>
+      <div class="field-data original-text" contenteditable="true"></div>
+    </td>`;
+
+    (<HTMLElement>name_tr.getElementsByClassName("field-title")[0]).innerText = title;
+
+    (<HTMLElement>data_tr.getElementsByClassName("original-text")[0]).innerText = data;
+
+    //Field for learning panel
     let learning_div = document.createElement('div');
 
-    //TODO create internal html for above variables
+    learning_div.className = "field column"
 
+    learning_div.innerHTML = `
+        <div class="field-title"></div>
+        <div class="field-data" contenteditable="true"></div>`;
+
+    (<HTMLElement>learning_div.getElementsByClassName("field-title")[0]).innerText = title;
+    (<HTMLElement>learning_div.getElementsByClassName("field-data")[0]).innerText = data;
+
+    //Add created elements into table and field list
     let learning_phase_fields = document.getElementById("learning-phase-fields")!
     let testing_table = document.getElementById("testing-table")!
 
