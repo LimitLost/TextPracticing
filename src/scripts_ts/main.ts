@@ -5,19 +5,24 @@ function openLastFile() {
 }
 
 function openFileSelector() {
-
+    //TODO https://tauri.app/v1/api/js/dialog/#opendialogoptions
+    //TODO https://beta.tauri.app/features/dialog/
 }
 
 function doneSelect() {
-    //TODO Reset Visibility of testing and learning panels
+    //Reset Visibility of testing and learning panels
     hide(testing_phase_panel)
     show(learning_phase_panel)
+
+    //TODO
 }
 
 function notDoneSelect() {
-    //TODO Reset Visibility of testing and learning panels
+    //Reset Visibility of testing and learning panels
     hide(testing_phase_panel)
     show(learning_phase_panel)
+
+    //TODO
 }
 
 function startTest() {
