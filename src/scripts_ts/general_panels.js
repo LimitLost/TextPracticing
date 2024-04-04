@@ -3,6 +3,10 @@
  * @param {HTMLElement} el
  */
 function hide(el) {
+    if (el.classList.contains("hidden")) {
+        //Do nothing when element is already hidden
+        return;
+    }
     el.classList.add("hidden");
     if (el.classList.contains("can-hide")) {
         let timeoutId = setTimeout(() => {
@@ -22,6 +26,7 @@ function hide(el) {
 function show(el) {
     if (el.hasAttribute("hiding-id")) {
         clearTimeout(Number(el.getAttribute("hiding-id")));
+        el.removeAttribute("hiding-id");
     }
     el.classList.remove("fully-hidden", "hidden");
 }
@@ -41,6 +46,7 @@ function stopGlobalLoading() {
 
 function showFatalError(err) {
     console.error(err);
+    //TODO use already existing variables
     let panel = document.getElementById("err-panel-base");
     let text = document.getElementById("err-text");
     let hideButton = document.getElementById("err-button");
