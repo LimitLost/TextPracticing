@@ -5,9 +5,6 @@
 var only_one_selection: number | null = null
 
 function update_possible_selections(not_done_possible: boolean, done_possible: boolean) {
-    let not_done_button = document.getElementById("not-done-button") as HTMLButtonElement;
-    let done_button = document.getElementById("done-button") as HTMLButtonElement;
-
     not_done_button.disabled = !not_done_possible;
     done_button.disabled = !done_possible;
     //At least one of these bools must be true, it's checked on the tauri side
@@ -21,8 +18,8 @@ function reset_learning_panel(subject: string) {
         (<HTMLElement>el).innerText = subject;
     }
 
-    document.getElementById("learning-phase-fields")!.innerHTML = ""
-    document.getElementById("testing-table")!.innerHTML = ""
+    learning_phase_fields.innerHTML = ""
+    testing_table.innerHTML = ""
 
 }
 
@@ -60,9 +57,6 @@ function create_learning_panel_field(title: string, data: string) {
     (<HTMLElement>learning_div.getElementsByClassName("field-data")[0]).innerText = data;
 
     //Add created elements into table and field list
-    let learning_phase_fields = document.getElementById("learning-phase-fields")!
-    let testing_table = document.getElementById("testing-table")!
-
     learning_phase_fields.appendChild(learning_div);
     testing_table.appendChild(name_tr);
     testing_table.appendChild(data_tr);
