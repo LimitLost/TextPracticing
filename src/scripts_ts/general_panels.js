@@ -32,27 +32,22 @@ function show(el) {
 }
 
 function startGlobalLoading() {
-    let panel = document.getElementById("global-loading")
 
-    show(panel);
+    show(global_loading);
 }
 
 function stopGlobalLoading() {
-    let panel = document.getElementById("global-loading")
 
-    hide(panel);
+    hide(global_loading);
 
 }
 
 function showFatalError(err) {
     console.error(err);
-    //TODO use already existing variables
-    let panel = document.getElementById("err-panel-base");
-    let text = document.getElementById("err-text");
-    let hideButton = document.getElementById("err-button");
-    text.innerText = err;
-    hideButton.style.visibility = "hidden";
-    show(panel);
+
+    err_text.innerText = err;
+    err_button.style.visibility = "hidden";
+    show(err_panel_base);
 }
 /**
  * 
@@ -61,27 +56,23 @@ function showFatalError(err) {
  */
 function showError(err, hide_action = undefined) {
     console.error(err);
-    let panel = document.getElementById("err-panel-base");
-    let text = document.getElementById("err-text");
-    let hideButton = document.getElementById("err-button");
-    hideButton.style.visibility = null;
+    err_button.style.visibility = null;
     if (typeof hide_action == 'function') {
-        hideButton.innerText = "Try Again"
-        hideButton.onclick = () => {
+        err_button.innerText = "Try Again"
+        err_button.onclick = () => {
             hideErrPanel();
             hide_action();
         }
     } else {
-        hideButton.innerText = "OK"
-        hideButton.onclick = () => {
+        err_button.innerText = "OK"
+        err_button.onclick = () => {
             hide_action();
         }
     }
 
-    text.innerText = err;
-    show(panel);
+    err_text.innerText = err;
+    show(err_panel_base);
 }
 function hideErrPanel() {
-    let panel = document.getElementById("err-panel-base");
-    hide(panel);
+    hide(err_panel_base);
 }
