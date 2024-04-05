@@ -7,6 +7,24 @@ function openLastFile() {
 function openFileSelector() {
     //TODO https://tauri.app/v1/api/js/dialog/#opendialogoptions
     //TODO https://beta.tauri.app/features/dialog/
+
+    let open_fn = () => {
+
+        let selected = await windowFileOpen(last_practicing_file, "Open file with practice data")
+        if (selected != null) {
+
+        }
+
+        windowFileOpen(last_practicing_file, "Open file with practice data").then((value) => {
+            open_file(<string>value)
+        }, (err) => {
+            showError(err, open_fn)
+        })
+    }
+
+    open_fn();
+
+
 }
 
 function doneSelect() {
