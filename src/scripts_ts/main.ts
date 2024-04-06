@@ -5,42 +5,83 @@ function openLastFile() {
 }
 
 function openFileSelector() {
-    //TODO https://tauri.app/v1/api/js/dialog/#opendialogoptions
-    //TODO https://beta.tauri.app/features/dialog/
 
-    let open_fn = () => {
+    let action = async () => {
 
-        let selected = await windowFileOpen(last_practicing_file, "Open file with practice data")
+        let selected = null;
+
+        while (selected == null) {
+            selected = <string | null>await windowFileOpen(last_practicing_file, "Open file with practice data")
         if (selected != null) {
+                await open_file(selected)
+                if (only_one_selection != null) {
+                    switch (only_one_selection) {
+                        case 0:
+                            notDoneSelect();
+                            break;
+                        case 1:
+                            doneSelect();
+                            break;
+                        default:
+                            console.log(`only_one_selection: ${only_one_selection}`);
+                            showError("Unknown default subject type detected!");
+                            openTypeSelector();
+                    }
+                } else {
+                    openTypeSelector();
+                }
+            }
+        }
 
         }
 
-        windowFileOpen(last_practicing_file, "Open file with practice data").then((value) => {
-            open_file(<string>value)
+
+    let run = () => {
+        startGlobalLoading();
+        action().then(() => {
+            stopGlobalLoading();
         }, (err) => {
-            showError(err, open_fn)
+            stopGlobalLoading();
+            showError(err, run)
         })
     }
 
-    open_fn();
+    run();
+}
+
+function openTypeSelector() {
+    show(select_subject_type_panel)
+}
+
+function subjectSelected(done: boolean) {
+    //Reset Visibility of testing and learning panels
+    hide(testing_phase_panel)
+    show(learning_phase_panel)
+
+    hide(select_subject_type_panel)
 
 
+    let action = () => {
+        startGlobalLoading();
+        open_random_subject(done).then(() => {
+            stopGlobalLoading();
+            show(learning_phase_panel);
+        }, (err) => {
+            stopGlobalLoading();
+            showError(err, action)
+        })
+
+}
+
+    action();
 }
 
 function doneSelect() {
-    //Reset Visibility of testing and learning panels
-    hide(testing_phase_panel)
-    show(learning_phase_panel)
-
-    //TODO
+    subjectSelected(true);
 }
 
 function notDoneSelect() {
-    //Reset Visibility of testing and learning panels
-    hide(testing_phase_panel)
-    show(learning_phase_panel)
-
-    //TODO
+    subjectSelected(false);
 }
 
 function startTest() {
