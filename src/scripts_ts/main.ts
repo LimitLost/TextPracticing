@@ -12,7 +12,7 @@ function openFileSelector() {
 
         while (selected == null) {
             selected = <string | null>await windowFileOpen(last_practicing_file, "Open file with practice data")
-        if (selected != null) {
+            if (selected != null) {
                 await open_file(selected)
                 if (only_one_selection != null) {
                     switch (only_one_selection) {
@@ -33,7 +33,7 @@ function openFileSelector() {
             }
         }
 
-        }
+    }
 
 
     let run = () => {
@@ -71,7 +71,7 @@ function subjectSelected(done: boolean) {
             showError(err, action)
         })
 
-}
+    }
 
     action();
 }
@@ -85,25 +85,47 @@ function notDoneSelect() {
 }
 
 function startTest() {
+    hide(learning_phase_panel);
+    show(testing_phase_panel);
+    //TODO Reset And Start 10 Minute Timer
+    //TODO Reset Test Buttons shown
+    //TODO Hide Results
 
 }
 function waitStartTest() {
+    hide(learning_phase_panel);
+    show(pause_time_panel);
+    //TODO Reset Pause Time Selector
 
 }
 function cancelPause() {
+    //TODO Go back to learning panel
 
 }
 function startPause() {
+    //TODO Hide Time Selector Inputs
+    //TODO Show And Start Pause Countdown
+    //TODO Disable start Pause Button
+    //TODO Switch Cancel pause button functionality (from exit to stop pause)
 
 }
+
+function pauseEnd() {
+    //TODO Hide Pause Selector Menu
+    startTest();
+}
+
 function backToLearning() {
+    //TODO Hide Testing Panel
+    //TODO Show Learning Panel
 
 }
 function completeLearning() {
-
+    //TODO Show Results
+    //TODO Show Check Result Buttons Row
 }
 function learnAgain() {
-
+    backToLearning();
 }
 
 setup().then((last_file) => {
