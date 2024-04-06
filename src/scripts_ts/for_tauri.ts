@@ -10,6 +10,8 @@ function update_possible_selections(not_done_possible: boolean, done_possible: b
     //At least one of these bools must be true, it's checked on the tauri side
     if (not_done_possible != done_possible) {
         only_one_selection = not_done_possible ? 0 : 1;
+    } else {
+        only_one_selection = null
     }
 }
 
