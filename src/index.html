@@ -53,23 +53,23 @@
   <!--Pause Time Panel-->
   <div class="column panel" id="pause-time-panel">
     <div class="title">Select Pause Time</div>
-    <div class="row">
-      <input type="number" id="edit-pause-minute">
+    <div class="row" id="pause-editor-row">
+      <input type="number" id="pause-editor-minute">
       :
-      <input type="number" id="edit-pause-second">
+      <input type="number" id="pause-editor-second">
     </div>
-    <div class="row">
+    <div class="row" id="pause-show-row">
       <div id="pause-minute">0</div>
       :
       <div id="pause-second">0</div>
     </div>
     <div class="row">
-      <button onclick="cancelPause()">Cancel</button>
-      <button onclick="startPause()">Start Pause</button>
+      <button id="cancel-pause-button" onclick="cancelPause()">Cancel</button>
+      <button id="start-pause-button" onclick="startPause()">Start Pause</button>
     </div>
   </div>
 
-  <!--Testing Phase Panel-->
+  <!--Testing And Check Results Phase Panel-->
   <div class="column panel" id="testing-phase-panel">
     <div class="row">
       <div class="title">Testing Phase: <div class="subject-title"></div>
@@ -85,11 +85,11 @@
 
 
     </table>
-    <div class="row">
+    <div class="row" id="testing-panel-buttons">
       <button onclick="backToLearning()">Go Back To Learning</button>
       <button onclick="completeLearning()">Done</button>
     </div>
-    <div class="row">
+    <div class="row" id="check-results-panel-buttons">
       <button onclick="learnAgain()">Learn this Subject Again</button>
       <div>Or Open Random</div>
       <button onclick="notDoneSelect()">Not done Subject</button>
