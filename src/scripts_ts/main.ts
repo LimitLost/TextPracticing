@@ -251,7 +251,7 @@ function completeLearning() {
 function learnAgain() {
     backToLearning();
 }
-
+startGlobalLoading();
 setup().then((last_file) => {
     if (last_file != null) {
         last_file_path.innerText = last_file;
@@ -261,6 +261,8 @@ setup().then((last_file) => {
         last_file_button.disabled = true;
     }
     last_practicing_file = last_file
+    stopGlobalLoading();
 }, (err) => {
+    stopGlobalLoading();
     showFatalError(err);
 })
