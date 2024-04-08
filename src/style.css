@@ -1,3 +1,49 @@
 .second-hidden tr>*:nth-child(2) {
   display: none;
 }
+
+body,
+html {
+  width : 100%;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-color: ;
+}
+
+.row {
+  display       : flex;
+  flex-direction: row;
+}
+
+.column {
+  display       : flex;
+  flex-direction: column;
+}
+
+.can-hide {
+  transition: opacity 0.1s;
+}
+
+.hidden {
+  opacity: 0;
+}
+
+.fully-hidden {
+  display: none;
+}
+
+.panel {
+  border          : 0.2rem solid var(--accent-color);
+  border-radius   : 2rem;
+  padding         : 3rem;
+  gap             : 0.5rem;
+  position        : absolute;
+  background-color: ;
+}
+
+.title {
+  font-size: 2rem;
+}
