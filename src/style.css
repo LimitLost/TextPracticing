@@ -10,7 +10,10 @@ html {
 }
 
 body {
-  background-color: ;
+  background-color: rgb(233, 233, 233);
+  display         : flex;
+  align-items     : center;
+  justify-content : center;
 }
 
 .row {
@@ -41,9 +44,55 @@ body {
   padding         : 3rem;
   gap             : 0.5rem;
   position        : absolute;
-  background-color: ;
+  background-color: rgb(214, 214, 214);
+  margin-left     : min(2rem, 6vw);
+  margin-right    : min(2rem, 6vw);
+  margin-top      : min(2rem, 6vh);
+  margin-bottom   : min(2rem, 6vh);
 }
 
 .title {
-  font-size: 2rem;
+  font-size     : 2rem;
+  padding-bottom: 0.3rem;
+}
+
+button {
+  padding         : 0.4rem;
+  font-size       : 1rem;
+  border          : rgb(43, 43, 43) solid 0.2rem;
+  border-radius   : 0.5rem;
+  background-color: rgb(212, 212, 212);
+}
+
+button:hover {
+  background-color: rgb(201, 201, 201);
+}
+
+button:active {
+  background-color: rgb(196, 196, 196);
+}
+
+#select-file-panel button {
+  padding-left: 0.5rem;
+}
+
+.text-align-left {
+  text-align: left;
+}
+
+#last-file-path {
+  opacity   : 0.7;
+  font-style: italic;
+}
+
+.gap-small {
+  gap: 0.3rem;
+}
+
+.content-space-evenly {
+  justify-content: space-evenly;
+}
+
+.flow-axis-center {
+  align-items: center;
 }

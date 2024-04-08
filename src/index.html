@@ -7,7 +7,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Text Practicing</title>
 
-  <script type="module" src="/scripts/main.js" defer></script>
+  <script type="module" src="/scripts/tauri_module.js" defer></script>
+  <script src="/scripts/tauri.js" defer></script>
 
   <script src="https://cdn.jsdelivr.net/npm/darkreader@4.9.58/darkreader.min.js" defer></script>
   <script src="/scripts/dark_mode.js" defer></script>
@@ -17,28 +18,28 @@
 
 <body>
   <!--Select File Panel-->
-  <div class="column panel" id="select-file-panel">
+  <div class="column panel can-hide hidden fully-hidden" id="select-file-panel">
     <div class="title">Select Practicing File</div>
-    <div class="column">
+    <div class="column gap-small">
       <button id="last-file-button" onclick="openLastFile()">
         <div class="column">
-          <div>Open Last File</div>
-          <div id="last-file-path">Last File Path</div>
+          <div class="text-align-left">Open Last File</div>
+          <div class="text-align-left" id="last-file-path">Last File Path</div>
         </div>
       </button>
-      <button onclick="openFileSelector()">Open File Selector</button>
+      <button class="text-align-left" onclick="openFileSelector()">Open File Selector</button>
     </div>
   </div>
   <!--Select Subject Type Panel-->
-  <div class="column panel" id="select-subject-type-panel">
+  <div class="column panel can-hide" id="select-subject-type-panel">
     <div class="title">Select Subject Type</div>
-    <div class="row">
+    <div class="row content-space-evenly">
       <button id="not-done-button" onclick="notDoneSelect()">Not Done</button>
       <button id="done-button" onclick="doneSelect()">Done</button>
     </div>
   </div>
   <!--Learning Phase Panel-->
-  <div class="column panel" id="learning-phase-panel">
+  <div class="column panel can-hide hidden fully-hidden" id="learning-phase-panel">
     <div class="title">Learning Phase: <div class="subject-title"></div>
     </div>
     <div class="column" id="learning-phase-fields">
@@ -51,7 +52,7 @@
   </div>
 
   <!--Pause Time Panel-->
-  <div class="column panel" id="pause-time-panel">
+  <div class="column panel can-hide hidden fully-hidden" id="pause-time-panel">
     <div class="title">Select Pause Time</div>
     <div class="row" id="pause-editor-row">
       <input type="number" id="pause-editor-minute">
@@ -70,7 +71,7 @@
   </div>
 
   <!--Testing And Check Results Phase Panel-->
-  <div class="column panel" id="testing-phase-panel">
+  <div class="column panel can-hide hidden fully-hidden" id="testing-phase-panel">
     <div class="row">
       <div class="title">Testing Phase: <div class="subject-title"></div>
       </div>
