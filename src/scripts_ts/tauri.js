@@ -9,7 +9,7 @@ window.invoke = invoke;
  * @returns {Promise<null | string | string[]>}
  */
 function windowFileOpen(defaultPath, title) {
-    tauri_file_dialog_open({
+    window.tauri_file_dialog_open({
         defaultPath: defaultPath,
         title: title
     })
