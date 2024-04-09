@@ -1,0 +1,44 @@
+.err-theme {
+    --accent-color: #e96161;
+    background    : rgb(237, 237, 237);
+    background    : linear-gradient(0deg, rgb(238, 229, 229) 0%, rgba(237, 237, 237, 1) 10%);
+}
+
+.err-theme.panel {
+    border: 0.2rem solid var(--accent-color);
+    gap   : 2rem;
+}
+
+.err-title {
+    text-align: center;
+    font-size : 3rem;
+
+    color: #f84545;
+
+    align-self: center;
+
+}
+
+#err-text {
+    font-size: 1.4rem;
+
+    align-self: center;
+    text-align: center;
+
+}
+
+.err-button {
+    padding         : 1rem;
+    border-radius   : 1.5rem;
+    border          : var(--accent-color) solid 0.2rem;
+    text-decoration : none;
+    background-image: linear-gradient(0deg, rgb(238, 229, 229) 0%, rgba(237, 237, 237, 1) 20%);
+}
+
+.err-button:hover {
+    background-image: linear-gradient(0deg, rgb(218, 210, 210) 0%, rgb(207, 207, 207) 20%);
+}
+
+.err-button:active {
+    background-image: linear-gradient(0deg, rgb(184, 176, 176) 0%, rgb(187, 187, 187) 20%);
+}
