@@ -63,12 +63,12 @@ function openFileSelector() {
 
         let selected = null;
 
-        while (selected == null) {
-            selected = <string | null>await windowFileOpen(last_practicing_file, "Open file with practice data")
-            if (selected != null) {
-                openFile(selected)
-            }
+        selected = await windowFileOpen(last_practicing_file, "Open file with practice data")
+        console.log(selected)
+        if (selected != null) {
+            openFile(<string>selected)
         }
+
 
     }
 
