@@ -6,14 +6,14 @@ use std::{
 };
 
 use anyhow::Context;
+use fancy_regex::{Regex, RegexBuilder};
 use lazy_static::lazy_static;
-use regex::bytes::Regex;
 use serde::{Deserialize, Serialize};
 
 use crate::command_error::{CommandError, CommandResult, ForUserAnyError, ForUserAnyError2};
 
 lazy_static! {
-    static ref PRACTICING_REGEX:Regex=Regex::new(r"(X. )?(?<subject>.*) Wstęp\n+(?<wstep>(\s{3,}.*\n)*)\s*(X. )?\2 Teza\n+(?<teza>(\s{3,}.*\n)*)\s*(X. )?\2 Odniesienie\n+(?<odniesienie>(\s{3,}.*\n)*)\s*((X. )?\2 Kontekst\n+(?<kontekst>(\s{3,}.*\n)*)\s*)?(X. )?\2 Podsumowanie\n+(?<podsumowanie>(\s{3,}.*\n)*)").unwrap();
+    static ref PRACTICING_REGEX:Regex=RegexBuilder::new(r"(X. )?(?<subject>.*) Wstęp\n+(?<wstep>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Teza\n+(?<teza>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Odniesienie\n+(?<odniesienie>(\s{3,}.*\n)*)\s*((X. )?\k<subject> Kontekst\n+(?<kontekst>(\s{3,}.*\n)*)\s*)?(X. )?\k<subject> Podsumowanie\n+(?<podsumowanie>(\s{3,}.*\n)*)").backtrack_limit(1_000_000_00).build().unwrap();
 }
 
 pub struct PracticingSubject {
@@ -34,18 +34,20 @@ impl PracticingFileData {
     fn new(path: impl AsRef<Path>) -> Result<Self, CommandError> {
         let mut text_file = std::fs::File::open(&path).context_for_user("Opening file failed!")?;
 
-        let mut text_data = Vec::new();
+        let mut text_data = String::new();
 
         text_file
-            .read_to_end(&mut text_data)
+            .read_to_string(&mut text_data)
             .context_for_user("Reading file failed!")?;
 
         let mut subjects = HashMap::new();
 
         for captures in PRACTICING_REGEX.captures_iter(&text_data) {
+            let captures = captures.context_for_user("Getting text capture group failed!")?;
+
             //Get Subject Name
             let subject = if let Some(s) = captures.name("subject") {
-                String::from_utf8_lossy(s.as_bytes()).to_string()
+                s.as_str().to_string()
             } else {
                 //No subject in the current capture, skip
 
@@ -59,7 +61,7 @@ impl PracticingFileData {
                     continue;
                 }
                 if let Some(capture) = captures.name(capture_name) {
-                    let capture_data = String::from_utf8_lossy(capture.as_bytes()).to_string();
+                    let capture_data = capture.as_str().to_string();
 
                     captures_mapped.insert(capture_name.to_owned(), capture_data);
                 }
