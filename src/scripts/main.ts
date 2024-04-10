@@ -57,6 +57,8 @@ function openLastFile() {
     run();
 }
 
+var windowFileOpen: (defaultPath: string | null, title: string) => Promise<null | string | string[]>;
+
 function openFileSelector() {
 
     let action = async () => {

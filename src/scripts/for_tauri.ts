@@ -16,8 +16,11 @@ function update_possible_selections(not_done_possible: boolean, done_possible: b
 }
 
 function reset_learning_panel(subject: string) {
-    for (const el of document.getElementsByClassName("subject-title")) {
+    let titles = document.getElementsByClassName("subject-title");
+    for (let index = 0; index < titles.length; index++) {
+        const el = titles[index];
         (<HTMLElement>el).innerText = subject;
+
     }
 
     learning_phase_fields.innerHTML = ""

@@ -1,8 +1,9 @@
-const { invoke } = window.__TAURI__.tauri;
-
-const { open } = window.__TAURI__.dialog;
+import { invoke } from "@tauri-apps/api/tauri";
+import { open } from '@tauri-apps/api/dialog';
 
 window.invoke = invoke;
+
+
 
 /**
  * 
@@ -11,7 +12,7 @@ window.invoke = invoke;
  * @returns {Promise<null | string | string[]>}
  */
 async function windowFileOpen(defaultPath, title) {
-    await open({
+    return await open({
         defaultPath: defaultPath,
         title: title
     })
