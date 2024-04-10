@@ -68,7 +68,7 @@ function openFileSelector() {
         selected = await windowFileOpen(last_practicing_file, "Open file with practice data")
         console.log(selected)
         if (selected != null) {
-            openFile(<string>selected)
+            await openFile(<string>selected)
         }
 
 
