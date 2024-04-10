@@ -80,7 +80,7 @@ pub async fn update_last_open(new_last_open: PathBuf) -> Result<(), CommandError
             .as_ref()
             .unwrap()
             .save(cache_path)
-            .context("Saving global cache")?;
+            .with_context(|| format!("Saving global cache | path: {}", cache_path.display()))?;
     }
 
     Ok(())
@@ -98,7 +98,9 @@ async fn cache_update_last_wait_time_base(new_wait_time: u32) -> Result<(), Comm
     cache.last_wait_time = Some(new_wait_time);
 
     if let Some(cache_path) = &*CACHE_PATH {
-        cache.save(cache_path).context("Saving global cache")?;
+        cache
+            .save(cache_path)
+            .with_context(|| format!("Saving global cache | path: {}", cache_path.display()))?;
     }
 
     Ok(())
