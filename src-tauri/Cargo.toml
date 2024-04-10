@@ -15,9 +15,9 @@ tauri-build = {version = "1.4.0", features = [] }
 
 [dependencies]
 
+fancy-regex = "0.13.0"
 lazy_static = "1.4.0"
 rand = "0.8.5"
-regex = "1.10.4"
 
 # Saving Last Configuration And Cache
 ron = "0.8.1"
