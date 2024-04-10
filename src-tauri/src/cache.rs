@@ -5,12 +5,12 @@ use lazy_static::lazy_static;
 use serde::{Deserialize, Serialize};
 use tauri::async_runtime::Mutex;
 
-use crate::command_error::{CommandError, CommandResult, ForUserAnyError2, ForUserAnyError};
+use crate::command_error::{CommandError, CommandResult, ForUserAnyError, ForUserAnyError2};
 
 lazy_static! {
     static ref CACHE: Mutex<Option<Cache>> = Default::default();
-    static ref CACHE_PATH_BASE: Mutex<Option<PathBuf>> = Default::default();
-    static ref CACHE_PATH: Option<PathBuf> = CACHE_PATH_BASE.blocking_lock().take();
+    static ref CACHE_PATH_BASE: std::sync::Mutex<Option<PathBuf>> = Default::default();
+    static ref CACHE_PATH: Option<PathBuf> = CACHE_PATH_BASE.lock().unwrap().take();
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -54,7 +54,7 @@ pub async fn setup(cache_dir: PathBuf) -> anyhow::Result<Option<String>> {
         None
     };
 
-    *CACHE_PATH_BASE.lock().await = Some(cache_path);
+    *CACHE_PATH_BASE.lock().unwrap() = Some(cache_path);
 
     Ok(result)
 }

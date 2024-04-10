@@ -59,6 +59,12 @@ async fn setup_base(app_handle: tauri::AppHandle) -> Result<Option<String>, Comm
         .app_cache_dir()
         .context_for_user("Getting cache path failed!")?;
 
+    if !cache_dir.exists() {
+        std::fs::create_dir_all(&cache_dir)
+            .with_context(|| format!("path: {}", cache_dir.display()))
+            .context_for_user("Creating cache directory failed!")?;
+    }
+
     let last_open = cache::setup(cache_dir)
         .await
         .for_user("Getting cache failed!")?;
