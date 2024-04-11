@@ -98,6 +98,7 @@ function subjectSelected(done: boolean) {
     show(learning_phase_panel)
 
     hide(select_subject_type_panel)
+    hide(select_file_panel);
 
 
     let action = () => {
