@@ -26,6 +26,10 @@ body {
   flex-direction: column;
 }
 
+.column.scroll {
+  overflow-x: scroll;
+}
+
 .can-hide {
   transition: opacity 0.1s;
 }
@@ -73,10 +77,31 @@ button:active {
   gap: 0.3rem;
 }
 
+.gap-medium {
+  gap: 0.7rem;
+}
+
 .content-space-evenly {
   justify-content: space-evenly;
 }
 
 .flow-axis-center {
   align-items: center;
+}
+
+.field-title {
+  font-size: 1.25rem;
+}
+
+.field-data {
+  background-color: rgb(176, 176, 176);
+  border-radius   : 0.5rem;
+  padding         : 0.5rem;
+  padding-left    : 0.7rem;
+  padding-right   : 0.7rem;
+}
+
+#learning-phase-fields {
+  overflow-x   : hidden;
+  border-radius: 1rem;
 }
