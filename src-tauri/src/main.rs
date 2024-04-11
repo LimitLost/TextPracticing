@@ -187,8 +187,8 @@ async fn open_random_subject_base(window: tauri::Window, done: bool) -> Result<(
     reset_learning_panel(&window, random_subject_name.as_str())
         .context("Resetting learning panel")?;
 
-    for (key, data) in random_subject.captures.iter() {
-        create_learning_panel_field(&window, key.as_str(), data.as_str())
+    for (key, data) in random_subject.get_captures() {
+        create_learning_panel_field(&window, key, data.as_str())
             .context("Creating learning panel field")?;
     }
 

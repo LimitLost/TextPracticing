@@ -25,6 +25,20 @@ pub struct PracticingSubject {
     pub captures: HashMap<String, String>,
 }
 
+impl PracticingSubject {
+    pub fn get_captures<'a>(&'a self) -> Vec<(&'static str, &'a String)> {
+        let mut result = Vec::new();
+
+        for capture_name in PRACTICING_REGEX.capture_names().flatten() {
+            if let Some(data) = self.captures.get(capture_name) {
+                result.push((capture_name, data))
+            }
+        }
+
+        result
+    }
+}
+
 pub struct PracticingFileData {
     ///key - subject name
     pub subjects: HashMap<String, PracticingSubject>,
