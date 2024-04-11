@@ -105,6 +105,26 @@ button:active {
   overflow-x   : hidden;
   border-radius: 1rem;
 }
+
+::-webkit-scrollbar {
+  border-radius   : 2rem;
+  background-color: rgb(196, 196, 196);
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(122, 122, 122);
+  border          : 0.15rem solid rgb(235, 235, 235);
+  border-radius   : 2rem;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgb(102, 102, 102);
+}
+
+::-webkit-scrollbar-thumb:active {
+  background-color: rgb(87, 87, 87);
+}
+
 .loading-ring-box {
   width : 5rem;
   height: 5rem;
