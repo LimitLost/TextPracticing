@@ -1,7 +1,7 @@
 .err-theme {
     --accent-color: #e96161;
-    background    : rgb(237, 237, 237);
-    background    : linear-gradient(0deg, rgb(238, 229, 229) 0%, rgba(237, 237, 237, 1) 10%);
+    background    : rgb(223, 223, 223);
+    background    : linear-gradient(0deg, rgb(230, 221, 221) 0%, rgb(223, 223, 223) 10%);
 }
 
 .err-theme.panel {
@@ -32,13 +32,13 @@
     border-radius   : 1.5rem;
     border          : var(--accent-color) solid 0.2rem;
     text-decoration : none;
-    background-image: linear-gradient(0deg, rgb(238, 229, 229) 0%, rgba(237, 237, 237, 1) 20%);
+    background-image: linear-gradient(0deg, rgb(204, 194, 194) 0%, rgb(209, 209, 209) 20%);
 }
 
 .err-button:hover {
-    background-image: linear-gradient(0deg, rgb(218, 210, 210) 0%, rgb(207, 207, 207) 20%);
+    background-image: linear-gradient(0deg, rgb(185, 177, 177) 0%, rgb(185, 185, 185) 20%);
 }
 
 .err-button:active {
-    background-image: linear-gradient(0deg, rgb(184, 176, 176) 0%, rgb(187, 187, 187) 20%);
+    background-image: linear-gradient(0deg, rgb(167, 159, 159) 0%, rgb(168, 168, 168) 20%);
 }
