@@ -43,21 +43,21 @@
 }
 
 #select-file-panel .title::first-letter {
-    text-decoration-color: rgb(255, 127, 127);
+    text-decoration-color: rgb(127, 182, 255);
 }
 
 #select-subject-type-panel .title::first-letter {
-    text-decoration-color: rgb(255, 127, 127);
+    text-decoration-color: rgb(127, 255, 217);
 }
 
 #learning-phase-panel .title::first-letter {
-    text-decoration-color: rgb(255, 127, 127);
+    text-decoration-color: rgb(127, 255, 133);
 }
 
 #pause-time-panel .title::first-letter {
-    text-decoration-color: rgb(255, 127, 127);
+    text-decoration-color: rgb(127, 136, 255);
 }
 
 #testing-phase-panel .title::first-letter {
-    text-decoration-color: rgb(255, 127, 127);
+    text-decoration-color: rgb(255, 157, 127);
 }
