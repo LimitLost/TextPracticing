@@ -223,6 +223,12 @@ function startPause() {
     //Show And Start Pause Countdown
     pause_show_row.style.display = ""
     pause_start_millis = nowUtcMillis();
+    if (pause_editor_minute.value == "") {
+        pause_editor_minute.valueAsNumber = 0;
+    }
+    if (pause_editor_second.value == "") {
+        pause_editor_second.valueAsNumber = 0;
+    }
     let pause_len_millis = (pause_editor_minute.valueAsNumber * 60_000) + (pause_editor_second.valueAsNumber * 1_000);
 
     pause_end_millis = pause_start_millis + pause_len_millis;
