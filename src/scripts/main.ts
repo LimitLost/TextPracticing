@@ -256,6 +256,10 @@ function completeLearning() {
     //Pause Countdown Timer
     clearInterval(test_timer_interval_id!);
     test_timer_interval_id = null;
+
+    //Fixes Webview Bug (CSS not being updated properly)
+    var links = document.getElementsByTagName("link");
+    for (var i = 0; i < links.length; i++) { var link = links[i]; if (link.rel === "stylesheet") { link.href += "?"; } }
 }
 function learnAgain() {
     backToLearning();
