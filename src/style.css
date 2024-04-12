@@ -28,7 +28,11 @@ body {
 }
 
 .column.scroll {
-  overflow-x: scroll;
+  overflow-y: scroll;
+}
+
+.scroll-y {
+  overflow-y: scroll;
 }
 
 .can-hide {
@@ -91,7 +95,16 @@ button:active {
 }
 
 .field-title {
-  font-size: 1.25rem;
+  font-size     : 1.25rem;
+  padding-top   : 0.5rem;
+  padding-bottom: 0.25rem;
+}
+
+.field-title-original {
+  vertical-align: bottom;
+  padding-bottom: 0.25rem;
+  padding-left  : 1rem;
+  opacity       : 0.8;
 }
 
 .field-data {
@@ -102,9 +115,23 @@ button:active {
   padding-right   : 0.7rem;
 }
 
+.field-data.original-text {
+  margin-left: 1rem;
+}
+
 #learning-phase-fields {
   overflow-x   : hidden;
   border-radius: 1rem;
+}
+
+#testing-table {
+  overflow-x   : hidden;
+  border-radius: 1rem;
+  width        : 100%;
+}
+
+#check-results-panel-buttons {
+  align-items: center;
 }
 
 ::-webkit-scrollbar {

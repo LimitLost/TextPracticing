@@ -35,7 +35,7 @@ function create_learning_panel_field(title: string, data: string) {
 
     name_tr.innerHTML = `
     <td class="field-title"></td>
-    <td>(Original)</td>`;
+    <td class="field-title-original">(Original)</td>`;
 
     data_tr.innerHTML = `
     <td>

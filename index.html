@@ -85,25 +85,30 @@
     <div class="row">
       <div class="title">Testing Phase: <div class="subject-title"></div>
       </div>
-      <div class="testing-countdown row">
+      <div style="flex-grow: 1;"></div>
+      <div id="testing-countdown" class="row">
         <div id="testing-countdown-minute">10</div>
         :
         <div id="testing-countdown-second">00</div>
       </div>
     </div>
+    <!--Div is needed to show vertical scrollbar-->
+    <div class="scroll-y" style="border-radius: 1rem;">
+      <table id="testing-table" class="second-hidden">
 
-    <table id="testing-table" class="second-hidden">
 
+      </table>
+    </div>
 
-    </table>
     <div class="row" id="testing-panel-buttons">
       <button onclick="backToLearning()">Go Back To Learning</button>
       <button onclick="completeLearning()">Done</button>
     </div>
-    <div class="row" id="check-results-panel-buttons">
+    <div class="row gap-small" id="check-results-panel-buttons">
       <button onclick="learnAgain()">Learn this Subject Again</button>
       <div>Or Open Random</div>
       <button onclick="notDoneSelect()">Not done Subject</button>
+      <div> &#47; </div>
       <button onclick="doneSelect()">Done Subject</button>
     </div>
   </div>
