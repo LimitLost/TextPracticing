@@ -124,6 +124,38 @@ function notDoneSelect() {
     subjectSelected(false);
 }
 
+function nextDoneSelect() {
+
+    let action = () => {
+        startGlobalLoading();
+        subject_done().then(() => {
+            stopGlobalLoading();
+            doneSelect();
+        }, (err) => {
+            stopGlobalLoading();
+            showError(err, action)
+        })
+    }
+
+    action();
+
+}
+
+function nextNotDoneSelect() {
+
+    let action = () => {
+        startGlobalLoading();
+        subject_done().then(() => {
+            stopGlobalLoading();
+            notDoneSelect();
+        }, (err) => {
+            stopGlobalLoading();
+            showError(err, action)
+        })
+    }
+
+    action();
+}
 
 function testTimerUpdate() {
     let now = nowUtcMillis();
@@ -262,7 +294,18 @@ function completeLearning() {
     for (var i = 0; i < links.length; i++) { var link = links[i]; if (link.rel === "stylesheet") { link.href += "?"; } }
 }
 function learnAgain() {
-    backToLearning();
+    let action = () => {
+        startGlobalLoading();
+        subject_done().then(() => {
+            stopGlobalLoading();
+            backToLearning();
+        }, (err) => {
+            stopGlobalLoading();
+            showError(err, action)
+        })
+    }
+
+    action();
 }
 startGlobalLoading();
 setup().then((last_file) => {
