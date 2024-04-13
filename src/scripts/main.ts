@@ -89,6 +89,7 @@ function openFileSelector() {
 }
 
 function openTypeSelector() {
+    hide(select_file_panel);
     show(select_subject_type_panel)
 }
 
