@@ -6,8 +6,8 @@ Based on [Tauri](https://tauri.app/)
 
 ## How It Works
 
-- Loads all the subject data from selected file
-- Selects a random subject from the loaded list that wasn't shown before (or was shown before, depending on the button selected)
+- Loads all the subject data from the selected file
+- Selects a random subject from the loaded list that wasn't shown before (or was shown before, depending on the button selected, if possible)
 
 ### Learning Phase
 
@@ -15,7 +15,7 @@ Based on [Tauri](https://tauri.app/)
 
 - Shows the Question Data (Currently: Wstęp, Teza, Odwołanie, Kontekst, Zakończenie)
 
-- You can now start the test or wait additional selected time before the test start (usefull for testing long term memory)
+- You can now start the test or wait additional selected time before the test start (useful for testing long term memory)
 
 ### Testing Phase
 
@@ -28,6 +28,27 @@ Based on [Tauri](https://tauri.app/)
 
 - You will be shown the original learning text for comparison
 - You can now start learning current subject again or select a new random one, that was or wasn't shown before
+
+## Compilation
+
+Requirements:
+
+- [Rust Language](https://www.rust-lang.org/learn/get-started)
+- [npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+
+Only needed for the first compilation:
+
+```bat
+git clone https://github.com/LimitLost/TextPracticing.git
+cd TextPracticing
+npm install
+```
+
+Compilation:
+
+```bat
+npm run tauri dev
+```
 
 ## License
 
