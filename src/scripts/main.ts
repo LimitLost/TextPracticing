@@ -172,8 +172,12 @@ function testTimerUpdate() {
     }
     let minutes = (seconds - (seconds % 60)) / 60;
 
+    if (seconds < 0) {
+        testing_countdown_minute.innerText = `-${minutes.toString()}`;
+    } else {
+        testing_countdown_minute.innerText = minutes.toString();
+    }
 
-    testing_countdown_minute.innerText = minutes.toString();
     testing_countdown_second.innerText = shown_seconds.toString().padStart(2, "0");
 }
 
