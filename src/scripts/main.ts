@@ -232,6 +232,7 @@ function pauseTimerUpdate() {
         pause_interval_id = null;
         hide(pause_time_panel);
         startTest();
+        start_pause_button.disabled = false;
         return;
     }
 
