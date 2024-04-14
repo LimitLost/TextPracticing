@@ -1,0 +1,38 @@
+Example Subject Wstęp
+   Example Text sdwqw
+   Example Text xsdss
+Example Subject Teza
+   Example Text edw3423
+Example Subject Odniesienie
+    Example Text 123123
+Example Subject Kontekst
+    Example Text 5454
+Example Subject Podsumowanie
+   Example Text 1
+
+X. Example Subject2 Wstęp
+   Example Text aaaa
+   Example Text bbbbb
+X. Example Subject2 Teza
+   Example Text ccccc
+   Example Text ccccc2
+X. Example Subject2 Odniesienie
+    Example Text ddddd
+X. Example Subject2 Kontekst
+    Example Text eeee
+X. Example Subject2 Podsumowanie
+   Example Text ffffff
+
+X. Example Subject3 Wstęp
+   Example Text x1
+   Example Text x2
+X. Example Subject3 Teza
+   Example Text x3
+   Example Text x4
+X. Example Subject3 Odniesienie
+    Example Text x5
+    Example Text x6
+X. Example Subject3 Podsumowanie
+   Example Text x7
+   Example Text x7
+   

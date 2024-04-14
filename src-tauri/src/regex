@@ -1,0 +1,11 @@
+(X. )?(?<subject>.*) Wstęp\n+(?<wstep>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Teza\n+(?<teza>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Odniesienie\n+(?<odniesienie>(\s{3,}.*\n)*)\s*((X. )?\k<subject> Kontekst\n+(?<kontekst>(\s{3,}.*\n)*)\s*)?(X. )?\k<subject> Podsumowanie\n+(?<podsumowanie>(\s{3,}.*\n)*)(?x)#
+#    Notes:
+#    I recommend using  https://regexr.com/  for testing your own regex out
+#    (?<subject>) named group is needed for the regex to be handled correctly
+#    \k<subject> references current subject name matched by (?<subject>)
+#    (?<x>(\s{3,}.*\n)*) matches every line with at least 3 whitespace at the start
+#    (?x) activates ability to write comments after `#` (also whitespace is ignored) 
+#    In this regex additional line at the end (which will be ignored in parsed data) is expected
+#
+#    To check if your regex works for the current example-file.txt use command (in src-tauri folder):
+#    cargo test -- --nocapture

@@ -29,6 +29,12 @@ Based on [Tauri](https://tauri.app/)
 - You will be shown the original learning text for comparison
 - You can now start learning current subject again or select a new random one, that was or wasn't shown before
 
+## File Parsing
+
+[Regular Expression File](/src-tauri/src/regex) with comments
+
+[Example file](/src-tauri/src/example-file.txt) working for the current Regex
+
 ## Compilation
 
 Requirements:

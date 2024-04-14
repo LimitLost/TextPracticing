@@ -13,9 +13,41 @@ use serde::{Deserialize, Serialize};
 use crate::command_error::{CommandError, CommandResult, ForUserAnyError, ForUserAnyError2};
 
 lazy_static! {
-    static ref PRACTICING_REGEX:Regex=RegexBuilder::new(r"(X. )?(?<subject>.*) Wstęp\n+(?<wstep>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Teza\n+(?<teza>(\s{3,}.*\n)*)\s*(X. )?\k<subject> Odniesienie\n+(?<odniesienie>(\s{3,}.*\n)*)\s*((X. )?\k<subject> Kontekst\n+(?<kontekst>(\s{3,}.*\n)*)\s*)?(X. )?\k<subject> Podsumowanie\n+(?<podsumowanie>(\s{3,}.*\n)*)").backtrack_limit(1_000_000_00).build().unwrap();
+    static ref PRACTICING_REGEX: Regex = RegexBuilder::new(include_str!("regex"))
+        .backtrack_limit(1_000_000_00)
+        .build()
+        .unwrap();
 }
 
+#[test]
+fn regex_test() {
+    println!(">====");
+    let file = include_str!("example-file.txt");
+
+    let data = match PracticingFileData::from_text(file) {
+        Ok(o) => o,
+        Err(err) => {
+            panic!("{} ||| Debug: {:?}", err.for_user_message, err.error);
+        }
+    };
+
+    if data.subjects.is_empty() {
+        println!("No Subjects were found in the test file!")
+    } else {
+        println!("Parsed Data:");
+        println!("===================================");
+        for (title, subject) in data.subjects.into_iter() {
+            println!("title: `{title}`");
+            println!("=================");
+            println!("data: `{subject:#?}`");
+            println!("=================");
+        }
+        println!("===================================");
+    }
+    println!("Regex Test Complete!");
+    println!(">====");
+}
+#[derive(Debug)]
 pub struct PracticingSubject {
     ///key - name of the capture
     ///
@@ -45,18 +77,10 @@ pub struct PracticingFileData {
 }
 
 impl PracticingFileData {
-    fn new(path: impl AsRef<Path>) -> Result<Self, CommandError> {
-        let mut text_file = std::fs::File::open(&path).context_for_user("Opening file failed!")?;
-
-        let mut text_data = String::new();
-
-        text_file
-            .read_to_string(&mut text_data)
-            .context_for_user("Reading file failed!")?;
-
+    fn from_text(text: &str) -> Result<Self, CommandError> {
         let mut subjects = HashMap::new();
 
-        for captures in PRACTICING_REGEX.captures_iter(&text_data) {
+        for captures in PRACTICING_REGEX.captures_iter(text) {
             let captures = captures.context_for_user("Getting text capture group failed!")?;
 
             //Get Subject Name
@@ -90,6 +114,18 @@ impl PracticingFileData {
         }
 
         Ok(PracticingFileData { subjects })
+    }
+
+    fn new(path: impl AsRef<Path>) -> Result<Self, CommandError> {
+        let mut text_file = std::fs::File::open(&path).context_for_user("Opening file failed!")?;
+
+        let mut text_data = String::new();
+
+        text_file
+            .read_to_string(&mut text_data)
+            .context_for_user("Reading file failed!")?;
+
+        Self::from_text(&text_data)
     }
 }
 
