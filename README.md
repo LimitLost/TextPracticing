@@ -59,3 +59,7 @@ npm run tauri dev
 ## License
 
 [MIT](/LICENSE)
+
+Logo: CC-BY-NC-ND
+
+    Original Tauri Logo Designs by Daniel Thompson-Yvetot and Guillaume Chau
