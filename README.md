@@ -62,4 +62,4 @@ npm run tauri dev
 
 Logo: CC-BY-NC-ND
 
-    Original Tauri Logo Designs by Daniel Thompson-Yvetot and Guillaume Chau
+- Original Tauri Logo Designs by Daniel Thompson-Yvetot and Guillaume Chau
