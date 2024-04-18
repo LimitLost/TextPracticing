@@ -162,7 +162,7 @@ function testTimerUpdate() {
     let now = nowUtcMillis();
     let diff = now - test_timer_start_millis!
 
-    let current_timer_millis = 600_000 - diff
+    let current_timer_millis = 6_000 - diff
 
     let millis = current_timer_millis % 1000;
     let seconds = (current_timer_millis - millis) / 1000;
@@ -172,7 +172,7 @@ function testTimerUpdate() {
     }
     let minutes = (seconds - (seconds % 60)) / 60;
 
-    if (seconds < 0) {
+    if (seconds < 0 && minutes > -1) {
         testing_countdown_minute.innerText = `-${minutes.toString()}`;
     } else {
         testing_countdown_minute.innerText = minutes.toString();
