@@ -162,7 +162,7 @@ function testTimerUpdate() {
     let now = nowUtcMillis();
     let diff = now - test_timer_start_millis!
 
-    let current_timer_millis = 6_000 - diff
+    let current_timer_millis = 600_000 - diff
 
     let millis = current_timer_millis % 1000;
     let seconds = (current_timer_millis - millis) / 1000;
